@@ -3,6 +3,7 @@ from .exacta_quinella_odds_scraper import ExactaQuinellaOddsScraper
 from .just_before_info_scraper import JustBeforeInfoScraper
 from .quinellaplace_odds_scraper import QuinellaplaceOddsScraper
 from .race_info_scraper import RaceInfoScraper
+from .racer_scraper import RacerScraper
 from .races_scraper import RacesScraper
 from .result_scraper import ResultScraper
 from .stadiums_scraper import StadiumsScraper
@@ -22,4 +23,5 @@ __all__ = [
     TrioOddsScraper.__name__,
     TrifectaOddsScraper.__name__,
     ResultScraper.__name__,
+    RacerScraper.__name__,
 ]

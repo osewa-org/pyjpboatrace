@@ -7,6 +7,12 @@ from .parse_html_oddsk import parse_html_oddsk
 from .parse_html_oddstf import parse_html_oddstf
 from .parse_html_raceindex import parse_html_raceindex
 from .parse_html_racelist import parse_html_racelist
+from .parse_html_racer import (
+    parse_html_racer_back3,
+    parse_html_racer_course,
+    parse_html_racer_profile,
+    parse_html_racer_season,
+)
 from .parse_html_raceresult import parse_html_raceresult
 
 __all__ = [
@@ -20,4 +26,8 @@ __all__ = [
     parse_html_odds3f.__name__,
     parse_html_beforeinfo.__name__,
     parse_html_raceresult.__name__,
+    parse_html_racer_profile.__name__,
+    parse_html_racer_back3.__name__,
+    parse_html_racer_season.__name__,
+    parse_html_racer_course.__name__,
 ]

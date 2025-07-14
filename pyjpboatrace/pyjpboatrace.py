@@ -65,6 +65,7 @@ class PyJPBoatrace(object):
         self.TrioOdds = scraper.TrioOddsScraper(driver)
         self.TrifectaOdds = scraper.TrifectaOddsScraper(driver)
         self.Result = scraper.ResultScraper(driver)
+        self.Racer = scraper.RacerScraper(driver)
 
         self.Bet: Optional[operator.BettingOperator]
         self.Depost: Optional[operator.DepositOperator]
@@ -146,12 +147,7 @@ class PyJPBoatrace(object):
         validate_race(race)
         return self.RaceInfo.get(d, stadium, race)
 
-    def get_odds_win_placeshow(
-        self,
-        d: datetime.date,
-        stadium: int,
-        race: int
-    ) -> Dict[str, Any]:
+    def get_odds_win_placeshow(self, d: datetime.date, stadium: int, race: int) -> Dict[str, Any]:
         """Get win/placeshow odds
 
         Args:
@@ -172,12 +168,7 @@ class PyJPBoatrace(object):
         validate_race(race)
         return self.WinPlaceshowOdds.get(d, stadium, race)
 
-    def get_odds_quinellaplace(
-        self,
-        d: datetime.date,
-        stadium: int,
-        race: int
-    ) -> Dict[str, Any]:
+    def get_odds_quinellaplace(self, d: datetime.date, stadium: int, race: int) -> Dict[str, Any]:
         """Get quinellaplace odds
 
         Args:
@@ -198,12 +189,7 @@ class PyJPBoatrace(object):
         validate_race(race)
         return self.QuinellaplaceOdds.get(d, stadium, race)
 
-    def get_odds_exacta_quinella(
-        self,
-        d: datetime.date,
-        stadium: int,
-        race: int
-    ) -> Dict[str, Any]:
+    def get_odds_exacta_quinella(self, d: datetime.date, stadium: int, race: int) -> Dict[str, Any]:
         """Get exacta/quinella odds
 
         Args:
@@ -224,12 +210,7 @@ class PyJPBoatrace(object):
         validate_race(race)
         return self.ExactaQuinellaOdds.get(d, stadium, race)
 
-    def get_odds_trifecta(
-        self,
-        d: datetime.date,
-        stadium: int,
-        race: int
-    ) -> Dict[str, Any]:
+    def get_odds_trifecta(self, d: datetime.date, stadium: int, race: int) -> Dict[str, Any]:
         """Get trifecta odds
 
         Args:
@@ -250,12 +231,7 @@ class PyJPBoatrace(object):
         validate_race(race)
         return self.TrifectaOdds.get(d, stadium, race)
 
-    def get_odds_trio(
-        self,
-        d: datetime.date,
-        stadium: int,
-        race: int
-    ) -> Dict[str, Any]:
+    def get_odds_trio(self, d: datetime.date, stadium: int, race: int) -> Dict[str, Any]:
         """Get trio odds
 
         Args:
@@ -276,12 +252,7 @@ class PyJPBoatrace(object):
         validate_race(race)
         return self.TrioOdds.get(d, stadium, race)
 
-    def get_just_before_info(
-        self,
-        d: datetime.date,
-        stadium: int,
-        race: int
-    ) -> Dict[str, Any]:
+    def get_just_before_info(self, d: datetime.date, stadium: int, race: int) -> Dict[str, Any]:
         """Get just-before race information
 
         Args:
@@ -302,12 +273,7 @@ class PyJPBoatrace(object):
         validate_race(race)
         return self.JustBeforeInfo.get(d, stadium, race)
 
-    def get_race_result(
-        self,
-        d: datetime.date,
-        stadium: int,
-        race: int
-    ) -> Dict[str, Any]:
+    def get_race_result(self, d: datetime.date, stadium: int, race: int) -> Dict[str, Any]:
         """Get race result.
 
         Args:
@@ -327,6 +293,17 @@ class PyJPBoatrace(object):
         validate_stadium(stadium)
         validate_race(race)
         return self.Result.get(d, stadium, race)
+
+    def get_racer_info(self, toban: int) -> Dict[str, Any]:
+        """Get racer information by toban.
+
+        Args:
+            toban (int): racer registration number
+
+        Returns:
+            Dict[str, Any]: scraped data
+        """
+        return self.Racer.get(toban)
 
     def deposit(self, num_of_thousands_yen: int) -> None:
         """To deposit money.
@@ -463,20 +440,16 @@ class PyJPBoatrace(object):
 
         # create bet dict
         betdict = {
-            'trifecta': trifecta_betting_dict,
-            'trio': trio_betting_dict,
-            'exacta': exacta_betting_dict,
-            'quinella': quinella_betting_dict,
-            'quinellaplace': quinellaplace_betting_dict,
-            'win': win_betting_dict,
-            'placeshow': placeshow_betting_dict,
+            "trifecta": trifecta_betting_dict,
+            "trio": trio_betting_dict,
+            "exacta": exacta_betting_dict,
+            "quinella": quinella_betting_dict,
+            "quinellaplace": quinellaplace_betting_dict,
+            "win": win_betting_dict,
+            "placeshow": placeshow_betting_dict,
         }
 
         # bet
         if self.Bet is None:
             raise UserInformationNotGivenException()
-        return self.Bet.do(
-            stadium=stadium,
-            race=race,
-            betdict=betdict
-        )
+        return self.Bet.do(stadium=stadium, race=race, betdict=betdict)
